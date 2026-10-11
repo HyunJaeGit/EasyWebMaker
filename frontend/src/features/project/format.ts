@@ -3,7 +3,7 @@ import type { ComponentDefinitionDefined } from 'grapesjs';
 import type { SampleId } from '../../shared/samples';
 
 export const FORMAT = 'easy-web-maker';
-export const FORMAT_VERSION = 2;
+export const FORMAT_VERSION = 3;
 export const requiredOutputs = ['index.html', 'styles.css', 'script.js'] as const;
 export type OutputName = typeof requiredOutputs[number];
 export interface SavedBlock {
@@ -22,7 +22,7 @@ export interface SavedBlock {
 export interface AssetRecord { path: string; mime: string; role: 'image' | 'font' | 'license'; size: number; sha256: string }
 export interface SavedProject {
   format: typeof FORMAT;
-  version: 1 | typeof FORMAT_VERSION;
+  version: 1 | 2 | typeof FORMAT_VERSION;
   name: string;
   start?: SampleId;
   blocks: SavedBlock[];
@@ -34,7 +34,7 @@ export interface SavedProject {
   pages?: SavedPage[];
   activePageId?: string;
 }
-export interface SavedPage { id: string; name: string; blocks: SavedBlock[]; css: string; bodyStyle?: Record<string, string>; bodyBackground?: string }
+export interface SavedPage { files?: { html: string; css: string; js: string }; id: string; name: string; blocks: SavedBlock[]; css: string; bodyStyle?: Record<string, string>; bodyBackground?: string }
 export interface PageSnapshot extends SavedPage { html: string }
 export interface ProjectSnapshot { blocks: SavedBlock[]; css: string; html: string; bodyStyle?: Record<string, string>; bodyBackground?: string; pages?: PageSnapshot[]; activePageId?: string }
 export interface RestoredProject { project: SavedProject; components: ComponentDefinitionDefined[]; bodyBackground?: string; pages?: { id: string; name: string; css: string; components: ComponentDefinitionDefined[]; bodyStyle?: Record<string, string>; bodyBackground?: string }[] }

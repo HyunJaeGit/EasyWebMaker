@@ -7,7 +7,7 @@ export function StructureTree({ editor, selected, onSelect }: { editor: Editor; 
   useEffect(() => {
     // 캔버스에서 선택한 자식도 트리에서 찾을 수 있도록 조상만 자동으로 펼친다.
     if (!selected) return;
-    const parents: string[] = []; let parent = selected.parent();
+    const parents: string[] = [`page-${editor.Pages.getSelected()?.getId()}`]; let parent = selected.parent();
     while (parent) { parents.push(parent.cid); parent = parent.parent(); }
     setCollapsed(previous => new Set([...previous].filter(id => !parents.includes(id))));
   }, [selected]);
@@ -22,5 +22,7 @@ export function StructureTree({ editor, selected, onSelect }: { editor: Editor; 
     </div>{children.length > 0 && open && <ul>{children.map(child => render(child, depth + 1))}</ul>}</li>;
   };
   const body = editor.getWrapper();
-  return <div className="layer-tree structure-tree"><p className="editor-help">화살표로 접기·펼치기 · 마우스를 올리면 강조 · 클릭하면 선택</p><ul>{body && render(body, 0)}</ul></div>;
+  const page = editor.Pages.getSelected();
+  const pageKey = `page-${page?.getId()}`; const open = !collapsed.has(pageKey);
+  return <div className="layer-tree structure-tree"><ul>{page && <li><div className="structure-row structure-page-root"><button className="structure-toggle" type="button" aria-label={`페이지 ${page.getName()}.html ${open ? '접기' : '펼치기'}`} aria-expanded={open} onClick={() => setCollapsed(previous => { const next = new Set(previous); if (open) next.add(pageKey); else next.delete(pageKey); return next; })}>{open ? '▾' : '▸'}</button><span className="structure-page-name">▤ {page.getName()}.html<small>페이지</small></span></div>{open && <ul>{body && render(body, 1)}</ul>}</li>}</ul></div>;
 }

@@ -1,6 +1,7 @@
 // 불러온 JSON을 엔진에 전달하기 전에 형식·구조·참조·허용 속성을 검증한다.
 import { commonStyles } from '../blocks/definitions';
 import { FORMAT, FORMAT_VERSION, requiredOutputs, type SavedProject } from './format';
+import { pageFiles } from './pageFiles';
 
 function fail(message: string): never { throw new Error(message); }
 function record(value: unknown): value is Record<string, unknown> { return Boolean(value) && typeof value === 'object' && !Array.isArray(value); }
@@ -15,20 +16,32 @@ export function validateCss(css: string) {
 
 export function validateProject(value: unknown): SavedProject {
   if (!record(value) || value.format !== FORMAT) fail('이지웹메이커의 project.json 형식이 아닙니다. 외부 HTML의 역수입은 지원하지 않습니다.');
-  if (value.version !== 1 && value.version !== FORMAT_VERSION) fail('지원하지 않는 프로젝트 형식 버전입니다.');
-  if (value.version === FORMAT_VERSION) {
+  if (value.version !== 1 && value.version !== 2 && value.version !== FORMAT_VERSION) fail('지원하지 않는 프로젝트 형식 버전입니다.');
+  if (value.version === 2 || value.version === FORMAT_VERSION) {
     if (!Array.isArray(value.pages) || !value.pages.length || value.pages.length > 20) fail('페이지는 1~20개여야 합니다.');
     const pageIds = new Set<string>();
     for (const page of value.pages) {
       if (!record(page) || !string(page.id, 100) || !/^[\w-]+$/.test(page.id) || pageIds.has(page.id) || !string(page.name, 80) || !page.name.trim() || !Array.isArray(page.blocks) || !string(page.css, 512000)) fail('페이지 식별자·이름·블록·스타일이 올바르지 않습니다.');
       pageIds.add(page.id);
-      validateProject({ format: value.format, version: 1, name: value.name, start: value.start, blocks: page.blocks, css: page.css, bodyStyle: page.bodyStyle, bodyBackground: page.bodyBackground, assets: value.assets, outputs: value.outputs });
+      validateProject({ format: value.format, version: 1, name: value.name, start: value.start, blocks: page.blocks, css: page.css, bodyStyle: page.bodyStyle, bodyBackground: page.bodyBackground, assets: value.assets, outputs: Object.fromEntries(requiredOutputs.map(file => [file, "0".repeat(64)])) });
     }
     if (!string(value.activePageId, 100) || !pageIds.has(value.activePageId)) fail('현재 페이지 참조가 올바르지 않습니다.');
     if (!record(value.outputs)) fail('출력 목록이 없습니다.');
     const pageOutputs = value.outputs;
-    const expected = ['index.html', 'styles.css', 'script.js', ...value.pages.slice(1).flatMap((_, index) => [`page-${index + 2}.html`, `page-${index + 2}.css`])];
-    if (Object.keys(pageOutputs).length !== expected.length || expected.some(path => !hash(pageOutputs[path]))) fail('페이지 출력 목록이 올바르지 않습니다.');
+    const expected = value.version === 3 ? value.pages.flatMap(page => {
+      if (!record(page) || !record(page.files)) fail('페이지 파일 목록이 없습니다.');
+      const files = page.files;
+      for (const ext of ['html', 'css', 'js']) if (!string(files[ext], 120) || !new RegExp('^[a-zA-Z0-9가-힣_-]+\\.' + ext + '$').test(String(files[ext]))) fail('페이지 파일 이름이 올바르지 않습니다.');
+      if (Object.keys(files).length !== 3) fail('페이지 파일 목록이 올바르지 않습니다.');
+      return Object.values(files).map(String);
+    }) : ['index.html', 'styles.css', 'script.js', ...value.pages.slice(1).flatMap((_, index) => [`page-${index + 2}.html`, `page-${index + 2}.css`])];
+    if (Object.keys(pageOutputs).length !== expected.length || new Set(expected).size !== expected.length || expected.some(path => !hash(pageOutputs[path]))) fail('페이지 출력 목록이 올바르지 않습니다.');
+    if (value.version === 3) {
+      const names = pageFiles(value.pages.map(page => ({ name: String(page.name) })));
+      value.pages.forEach((page, index) => {
+        for (const ext of ['html', 'css', 'js'] as const) if (page.files[ext] !== names[index][ext]) fail('페이지 이름과 종속 파일 이름이 일치하지 않습니다.');
+      });
+    }
   }
   if (value.bodyStyle !== undefined) {
     if (!record(value.bodyStyle)) fail('본문 스타일 형식이 올바르지 않습니다.');
@@ -37,7 +50,7 @@ export function validateProject(value: unknown): SavedProject {
   if (!string(value.name, 80) || !value.name.trim() || !string(value.css, 512000) || !Array.isArray(value.blocks) || !Array.isArray(value.assets) || !record(value.outputs)) fail('프로젝트 필수 항목이 없거나 올바르지 않습니다.');
   if (value.start !== undefined && value.start !== 'school' && value.start !== 'public') fail('샘플 식별자가 올바르지 않습니다.');
   validateCss(value.css);
-  for (const file of requiredOutputs) if (!hash(value.outputs[file])) fail('출력 파일의 무결성 정보가 없습니다.');
+  for (const file of value.version === 1 ? requiredOutputs : []) if (!hash(value.outputs[file])) fail('출력 파일의 무결성 정보가 없습니다.');
   const paths = new Set<string>();
   if (value.assets.length > 100) fail('자산 개수 제한을 초과했습니다.');
   for (const asset of value.assets) {

@@ -13,12 +13,12 @@ export const commonStyles = ['color', 'background-color', 'font-size', 'text-ali
 const leaf = (tagName: string, content: string): ComponentDefinitionDefined => ({ type: 'ew-text', tagName, content });
 const link = (content: string, href = '#introduction'): ComponentDefinitionDefined => ({ type: 'ew-link', content, attributes: { href } });
 
-// 내장 text/link 모델은 유지하되 HTML 직접 입력과 자유 좌표 스타일은 열지 않는다.
+// 내장 text/link 모델을 유지하고 마우스 크기 조절을 제공한다. 자유 이동은 속성에서 명시적으로 켠다.
 export function registerBlocks(editor: Editor) {
-  editor.Components.addType('ew-text', { extend: 'text', model: { defaults: { droppable: false, editable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [] } } });
-  editor.Components.addType('ew-link', { extend: 'link', model: { defaults: { droppable: false, editable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [] } } });
-  editor.Components.addType('ew-image', { extend: 'image', model: { defaults: { droppable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [], resizable: false } } });
-  editor.Components.addType('ew-container', { model: { defaults: { tagName: 'section', attributes: { 'data-ew-container': 'true' }, droppable: true, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [] } } });
+  editor.Components.addType('ew-text', { extend: 'text', model: { defaults: { droppable: false, editable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [], resizable: { minDim: 10, currentUnit: false, unitWidth: "px", unitHeight: "px", ratioDefault: false } } } });
+  editor.Components.addType('ew-link', { extend: 'link', model: { defaults: { droppable: false, editable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [], resizable: { minDim: 10, currentUnit: false, unitWidth: "px", unitHeight: "px", ratioDefault: false } } } });
+  editor.Components.addType('ew-image', { extend: 'image', model: { defaults: { droppable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [], resizable: { minDim: 10, currentUnit: false, unitWidth: "px", unitHeight: "px", ratioDefault: false } } } });
+  editor.Components.addType('ew-container', { model: { defaults: { tagName: 'section', attributes: { 'data-ew-container': 'true' }, droppable: true, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [], resizable: { minDim: 10, currentUnit: false, unitWidth: "px", unitHeight: "px", ratioDefault: false } } } });
   for (const item of blockCatalog) editor.Blocks.add(item.id, { label: item.label, content: createBlock(item.id) });
 }
 

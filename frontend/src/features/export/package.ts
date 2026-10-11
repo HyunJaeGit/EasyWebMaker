@@ -1,11 +1,12 @@
 // 한 번의 다운로드로 독립 실행 사이트와 검증 가능한 재편집 프로젝트를 묶는다.
+import { pageFiles } from '../project/pageFiles';
 import { strToU8 } from 'fflate';
 import { fetchBytes, fontAssets, fontCss, fontLicensePath, localFontCss, packagedFontPath, sha256, validateImage } from './assets';
 import { FORMAT, FORMAT_VERSION, requiredOutputs, type AssetRecord, type ProjectSnapshot, type SavedProject } from '../project/format';
 import { validateProject } from '../project/validation';
 import { makeZip, MAX_ARCHIVE_BYTES, MAX_TOTAL_BYTES } from '../project/zip';
 import type { SampleId } from '../../shared/samples';
-import { pagesFiles, type HostingTarget } from './deployment';
+import { pagesFiles, deploymentFiles, type HostingTarget } from './deployment';
 import { backgroundCss, bodyStyleCss } from '../project/snapshot';
 
 export interface SitePackage { project: SavedProject; files: Record<string, Uint8Array>; zip: Uint8Array }
@@ -27,23 +28,23 @@ export function snapshotPreview(snapshot: ProjectSnapshot, name: string) {
 
 // 각 페이지의 HTML·CSS와 이미지 경로를 분리하고 글꼴은 공유한다.
 export async function buildSitePackage(snapshot: ProjectSnapshot, name: string, start?: SampleId, hosting: HostingTarget = 'static'): Promise<SitePackage> {
-  if (!snapshot.pages?.length) return buildSinglePackage(snapshot, name, start, hosting);
+  if (!snapshot.pages?.length) return buildSitePackage({ ...snapshot, pages: [{ ...snapshot, id: "home", name: "home" }], activePageId: "home" }, name, start, hosting);
   const files: Record<string, Uint8Array> = {};
   const assets = new Map<string, AssetRecord>();
   const pages = [];
+  const names = pageFiles(snapshot.pages);
   for (const [index, page] of snapshot.pages.entries()) {
     const site = await buildSinglePackage(page, name, start, 'static', `p${index + 1}-`);
-    const html = index ? `page-${index + 1}.html` : 'index.html';
-    const css = index ? `page-${index + 1}.css` : 'styles.css';
-    files[html] = strToU8(new TextDecoder().decode(site.files['index.html']).replace('./styles.css', `./${css}`));
-    files[css] = site.files['styles.css']; files['script.js'] = site.files['script.js'];
+    const { html, css, js } = names[index];
+    files[html] = strToU8(new TextDecoder().decode(site.files['index.html']).replace('./styles.css', `./${css}`).replace('./script.js', `./${js}`));
+    files[css] = site.files['styles.css']; files[js] = site.files['script.js'];
     for (const asset of site.project.assets) { assets.set(asset.path, asset); files[asset.path] = site.files[asset.path]; }
-    pages.push({ id: page.id, name: page.name, blocks: site.project.blocks, css: site.project.css, bodyStyle: site.project.bodyStyle, bodyBackground: site.project.bodyBackground });
+    pages.push({ files: names[index], id: page.id, name: page.name, blocks: site.project.blocks, css: site.project.css, bodyStyle: site.project.bodyStyle, bodyBackground: site.project.bodyBackground });
   }
   const outputs = Object.fromEntries(await Promise.all(Object.keys(files).filter(path => !path.startsWith('assets/')).map(async path => [path, await sha256(files[path])])));
   const project = validateProject({ ...pages[0], format: FORMAT, version: FORMAT_VERSION, name, start, pages, activePageId: snapshot.activePageId, assets: [...assets.values()], outputs });
   files['project.json'] = strToU8(JSON.stringify(project, null, 2));
-  if (hosting === 'github-pages') for (const [path, content] of Object.entries(pagesFiles)) files[path] = strToU8(content);
+  if (hosting === 'github-pages') for (const [path, content] of Object.entries(deploymentFiles(names[0].html))) files[path] = strToU8(content);
   if (files['project.json'].length > 2 * 1024 * 1024 || Object.values(files).reduce((sum, bytes) => sum + bytes.length, 0) > MAX_TOTAL_BYTES) throw new Error('프로젝트 저장 크기 제한을 초과했습니다.');
   const zip = await makeZip(files); if (zip.length > MAX_ARCHIVE_BYTES) throw new Error('ZIP 저장 크기 제한(25 MB)을 초과했습니다.');
   return { project, files, zip };

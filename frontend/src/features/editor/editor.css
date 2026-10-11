@@ -119,3 +119,153 @@
  .maker-layout .right-dock .layer-tree{overflow:visible;max-height:none}
  .maker-layout .mobile-panel-tabs{gap:4px}
 }
+
+/* GitHub처럼 프로젝트·페이지 관리의 입력과 액션을 구분한다. */
+.maker-command-menu{overflow:visible;flex-wrap:wrap;gap:6px}
+.command-category{position:relative;color:#1f2328;font-size:12px}
+.command-category>summary{cursor:pointer;padding:8px 12px;border:1px solid #d1d9e0;border-radius:6px;background:#f6f8fa;list-style:none}
+.command-category>summary{white-space:nowrap}
+.maker-layout .page-tabs{display:flex;flex-shrink:0;gap:3px;overflow-x:auto;min-width:0;border-bottom:1px solid #d1d9e0;margin-bottom:6px;padding:0 4px}
+.maker-layout .page-tabs button{flex-shrink:0;border:1px solid transparent;border-bottom:0;border-radius:6px 6px 0 0;background:#f6f8fa;color:#59636e;font-family:monospace;padding:8px 12px;min-height:36px;display:flex;align-items:center;gap:8px}
+.maker-layout .page-tabs button[aria-selected=true]{background:#fff;border-color:#d1d9e0;box-shadow:inset 0 3px #1f883d;color:#1f2328;font-weight:600}
+.structure-page-root{background:#f6f8fa;border:1px solid #d1d9e0;border-radius:5px}
+.structure-page-name{display:flex;align-items:center;gap:8px;min-width:0;overflow-wrap:anywhere;padding:8px 4px;font-size:12px;font-weight:600;flex:1}
+.structure-page-name small{margin-left:auto;color:#59636e;font-weight:400;white-space:nowrap}
+.project-dialog #filename-rules[role=alert]{color:#a14f44}
+
+/* 설명은 툴팁으로, 작업 영역은 캔버스에 배분한다. */
+.help-tip{display:inline-flex;vertical-align:middle;margin:2px 0}
+.maker-page .help-tip-trigger{border:1px solid #d1d9e0;border-radius:50%;width:20px;height:20px;min-height:20px;padding:0;font:11px/1 sans-serif;color:#59636e;background:#f6f8fa}
+.help-tip-content{position:fixed;z-index:10000;display:block;width:280px;max-width:calc(100vw - 16px);padding:10px 12px;border:1px solid #d1d9e0;border-radius:6px;background:#1f2328;color:white;box-shadow:0 4px 16px #0003;font:12px/1.7 sans-serif;pointer-events:none}
+.maker-layout .header-inner{height:40px;min-height:40px}
+.maker-layout .maker-page{position:relative;padding:4px 6px;gap:0}
+.maker-layout .maker-toolbar{padding:3px 4px;margin-bottom:3px;gap:6px;align-items:center}
+.maker-layout .project-heading label{display:flex;align-items:center;gap:6px;white-space:nowrap}
+.maker-layout .project-heading input{min-height:28px;padding:3px 7px;font-size:12px;width:clamp(140px,18vw,210px)}
+.maker-layout .maker-toolbar button{min-height:28px;padding:4px 8px;font-size:11px}
+.maker-layout .page-heading{width:auto;gap:4px;margin-right:auto}
+.maker-layout .page-tabs{margin-bottom:3px;padding-inline:2px}
+.maker-layout .page-tabs button{min-height:28px;padding:5px 10px;font-size:11px}
+.maker-layout .mobile-panel-tabs{margin-bottom:3px;gap:4px}
+.maker-layout .mobile-panel-tabs button{min-height:30px;padding:4px 8px}
+.maker-layout .maker-notice{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:25;background:#1f2328;color:#fff;border-radius:6px;padding:0;margin:0;min-height:0;max-height:80px;max-width:calc(100% - 24px);width:max-content;pointer-events:none;font-size:12px;box-shadow:0 4px 14px #0002;opacity:0}
+.maker-layout .maker-notice.notice-visible{padding:8px 12px;opacity:1}
+.maker-layout .canvas-heading{padding:3px 7px;gap:4px;min-height:32px}
+.maker-layout .zoom-controls button{min-height:24px;padding:3px 6px}
+.maker-layout .canvas-guides-toggle{min-height:26px;padding:3px 7px}
+.maker-layout .panel-heading{flex-direction:row;align-items:center;justify-content:space-between;padding-bottom:5px;margin-bottom:6px;gap:6px}
+.maker-layout .maker-panel{padding:8px}
+.maker-layout .panel-heading h2{font-size:13px}
+.maker-layout .property-category{margin-block:5px}
+.maker-layout .property-category>summary{padding:7px 9px}
+.maker-layout .editor-field{margin-block:7px}
+.maker-layout .panel-empty{padding-block:14px;font-size:12px}
+@media(max-width:600px){.maker-layout .header-inner{height:38px;min-height:38px}.maker-layout .project-heading{flex:1 1 100%;width:auto}.maker-layout .project-heading input{flex:1;min-width:0;width:auto;max-width:none}.maker-layout .page-heading{width:auto;margin-right:auto}.maker-layout .maker-toolbar{gap:4px}.maker-layout .maker-toolbar button{min-height:30px}.maker-layout .device-controls{margin-right:0}.maker-layout .page-tabs button{min-height:30px}.maker-layout .mobile-panel-tabs button{min-height:30px}.maker-layout .canvas-view-controls{gap:4px}.maker-layout .canvas-heading>span{font-size:11px}}
+.command-category .element-properties-menu{width:100%;margin:0!important;border:1px solid #d1d9e0!important;border-radius:4px;font-size:12px}
+.command-category[open]>summary{background:#eaeef2}
+.command-category>div{position:absolute;top:calc(100% + 5px);left:0;z-index:30;display:grid;min-width:180px;padding:6px;background:#fff;border:1px solid #d1d9e0;border-radius:8px;box-shadow:0 8px 24px #1f23281f}
+.command-category>div button{text-align:left;border:0!important;margin:0!important;border-radius:4px}
+.command-category>div button:hover{background:#f0f3f6}
+.maker-layout .maker-toolbar{background:#f6f8fa;border-bottom:1px solid #d1d9e0;gap:12px}
+.maker-layout .project-heading .section-kicker{display:none}
+.maker-layout .project-heading input,.page-heading input,.page-heading select{background:#fff;border:1px solid #d1d9e0;border-radius:6px;min-height:32px;color:#1f2328;padding:5px 9px}
+.project-heading label,.page-heading label{color:#59636e;font-size:11px}
+.new-page-button{align-self:end;white-space:nowrap;border:1px solid #1f883d;border-radius:6px;color:white;background:#1f883d;padding:7px 10px;font-size:12px;cursor:pointer}
+.zoom-controls{display:flex;align-items:center;border:1px solid #d1d9e0;border-radius:6px;overflow:hidden;background:#fff}
+.zoom-controls button{border:0;background:transparent;min-width:34px;padding:5px 8px;color:#1f2328;cursor:pointer}
+.zoom-controls button:hover{background:#eaeef2}
+.dock-divider{cursor:row-resize;touch-action:none;display:flex;align-items:center;justify-content:center;border-radius:4px;background:#e1e6da;min-height:8px}
+.dock-divider span{width:34px;height:2px;background:#899783;border-radius:2px;pointer-events:none}
+.dock-divider:hover,.dock-divider:focus-visible{background:#c9d8c0;outline:2px solid #b38329;outline-offset:0}
+.maker-layout .right-dock{gap:0}
+.maker-layout .right-dock .structure-panel{border-bottom:0}
+.maker-layout .maker-menu-host{overflow:visible}
+.maker-layout .header{position:relative;z-index:20;overflow:visible}
+.direct-edit-controls{margin-bottom:10px;border-bottom:1px solid #e1e6da;padding-bottom:8px}
+.filename-input{display:flex;align-items:center;border:1px solid #d1d9e0;border-radius:6px;background:#fff;margin:8px 0 16px;overflow:hidden}
+.project-dialog .filename-input input{border:0;margin:0;border-radius:0;min-width:0;flex:1;max-width:none}
+.filename-input>span{padding:8px 12px;background:#f6f8fa;border-left:1px solid #d1d9e0;color:#59636e;font-family:monospace}
+.project-dialog .file-bundle-preview{list-style:none;padding:0;margin:16px 0;border:1px solid #d1d9e0;border-radius:6px;background:#f6f8fa}
+.file-bundle-preview li{padding:12px 14px;display:flex;flex-direction:column;gap:4px;font-family:monospace}
+.file-bundle-preview span{color:#59636e}
+.maker-layout .maker-toolbar{flex-wrap:wrap;overflow:visible;padding:8px;gap:10px}
+.maker-layout .project-heading{min-width:0;flex-basis:auto}
+.maker-layout .project-heading input{width:clamp(140px,18vw,240px);font-size:14px;font-weight:600}
+.page-heading{align-items:end;gap:6px;flex-wrap:nowrap}
+.page-heading select{width:clamp(140px,16vw,220px);font-family:monospace}
+.maker-layout .rename-page-button{background:#fff;color:#59636e;border-color:#d1d9e0}
+.maker-command-menu{width:auto;flex-wrap:nowrap}
+.maker-layout .maker-workspace{grid-template-columns:190px minmax(0,1fr) 8px var(--dock-width,310px);gap:6px}
+.dock-width-divider{cursor:col-resize;touch-action:none;display:flex;align-items:center;justify-content:center;background:#e1e6da;border-radius:4px}
+.dock-width-divider span{height:34px;width:2px;background:#899783;pointer-events:none}
+.dock-width-divider:hover,.dock-width-divider:focus-visible{background:#c9d8c0;outline:2px solid #b38329}
+.canvas-view-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.maker-layout .canvas-guides-toggle{min-height:30px;padding:5px 8px;white-space:nowrap;font-size:11px}
+.canvas-guides-toggle[aria-pressed=true]{background:#e2eadb;border-color:#30846b;color:#285e49}
+.maker-layout .canvas-heading{flex-wrap:wrap}
+@media(max-width:600px){.maker-layout .project-heading{width:100%;max-width:none}.maker-layout .project-heading input{width:100%;max-width:none}.maker-command-menu .element-properties-menu{max-width:none}.maker-layout .header-inner{justify-content:space-between}.maker-layout .maker-menu-host{flex:0 0 auto}.maker-layout .command-category>summary{padding:7px 9px}}
+@media(max-width:1100px){.maker-layout .maker-workspace{grid-template-columns:165px minmax(0,1fr) 8px var(--dock-width,280px)}}
+@media(max-width:900px){.maker-layout .maker-workspace{grid-template-columns:minmax(0,1fr)}.dock-width-divider{display:none}.maker-layout .maker-toolbar{gap:8px}.maker-layout .project-heading{flex:1}.maker-layout .project-heading input{width:100%}.page-heading{margin-right:0}}
+@media(max-width:600px){.maker-layout .maker-toolbar{padding:6px}.maker-layout .project-heading{flex-basis:100%}.breadcrumb-divider{display:none}.page-heading{width:100%;margin-right:0}.page-heading label{flex:1;min-width:0}.page-heading select{width:100%}.maker-layout .device-controls{margin-right:auto}.maker-command-menu .element-properties-menu{max-width:84px;padding-inline:4px}.maker-layout .header-inner{gap:6px}.command-category>div{min-width:140px}.command-category:last-child>div{left:auto;right:0}.command-category>summary{padding:7px;font-size:11px}.maker-layout .brand{font-size:12px;gap:5px}.maker-layout .brand-mark{width:24px;height:24px;font-size:22px;line-height:22px}}
+.project-dialog input,.project-dialog select{display:block;max-width:100%;padding:8px 10px;border:1px solid #d1d9e0;border-radius:6px;margin:8px 0 16px;font:inherit}
+.project-dialog ul{font-size:13px;line-height:1.8;padding-left:20px;overflow-wrap:anywhere}
+@media(max-width:600px){.page-heading{flex-wrap:wrap;gap:6px}.maker-layout .project-heading input{width:145px}.page-heading input,.page-heading select{width:135px}.command-category>div{min-width:150px}.maker-command-menu{gap:4px}.command-category>summary{padding:8px}.zoom-controls button{min-height:34px}}
+
+/* 최종 밀도 설정: 이전 반응형 선언보다 뒤에서 적용한다. */
+.element-name-control{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px;align-items:center;border-bottom:1px solid #e1e6da;padding-bottom:6px}
+.element-name-control small{grid-column:1/-1;color:#a14f44;font-size:10px;line-height:1.5}
+.element-name-control small:empty{display:none}
+.page-navigation{display:flex;align-items:center;gap:4px;min-width:0;flex-shrink:0;margin-bottom:3px}
+.maker-layout .page-navigation .page-tabs{flex:1;min-width:0;margin:0}
+.maker-layout .page-navigation .mobile-panel-tabs{margin:0;flex-shrink:0}
+.maker-layout .project-heading input{height:28px;line-height:18px}
+@media(max-width:900px){.maker-layout .page-navigation .mobile-panel-tabs{display:flex}.maker-layout .page-navigation .mobile-panel-tabs button{flex:0 0 auto;min-height:28px;font-size:10px;padding:4px 7px}}
+.maker-layout .maker-toolbar{padding:3px 4px;gap:6px}
+.maker-layout .project-heading input{width:clamp(140px,18vw,210px);min-height:28px}
+.maker-layout .page-heading{width:auto;margin-right:auto;gap:4px}
+.maker-layout .canvas-heading button{min-height:24px;padding:3px 6px}
+@media(max-width:600px){.maker-layout .maker-toolbar{padding:2px;gap:4px}.maker-layout .project-heading input{flex:1;min-width:0;width:auto}.maker-layout .page-heading{width:auto;flex-wrap:nowrap;margin-right:auto}.maker-layout .device-controls{margin-right:0}.maker-layout .maker-toolbar button{padding:4px 6px;font-size:10px}.maker-layout .project-heading label{font-size:10px}.maker-layout .canvas-heading button{min-height:26px}.maker-layout .zoom-controls button{min-width:28px}.maker-layout .command-category>summary{padding:5px 8px}}
+
+/* 툴팁 아이콘을 제목 오른쪽에 고정하고 클릭 영역을 넓힌다. */
+.maker-page .help-tip-trigger{width:28px;height:28px;min-height:28px;font-size:12px;border-color:transparent;background:transparent;color:#768390}
+.maker-page .help-tip-trigger:hover,.maker-page .help-tip-trigger:focus-visible{border-color:#c8d4df;background:#eef3f8;color:#354c3a}
+.maker-layout .property-category>summary{display:flex;align-items:center;gap:6px;padding:4px 8px;list-style:none}
+.property-category>summary::-webkit-details-marker{display:none}
+.property-category>summary::before{content:'▸';color:#768390;font-size:11px}
+.property-category[open]>summary::before{content:'▾'}
+.property-category>summary>span:first-of-type{flex:1;min-width:0}
+.property-category>summary>.help-tip{margin:0;flex-shrink:0}
+.element-name-control{position:relative;display:block}
+.element-name-control>.help-tip{position:absolute;right:0;top:0;margin:0}
+.element-name-control .editor-field{padding-top:2px}
+.element-name-control .editor-field input{margin-top:4px}
+.direct-edit-controls{display:flex;align-items:center;gap:6px}
+.direct-edit-controls>.panel-button{flex:1}
+.command-category>div::before{content:'';position:absolute;left:0;right:0;top:-8px;height:8px}
+.maker-layout .inspector-compact{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:6px}
+.inspector-compact h3{margin:0;font-size:14px;overflow-wrap:anywhere}
+.inspector-compact small{color:#768390;font:11px monospace}
+.element-inspector-details{border:1px solid #e1e6da;border-radius:5px;margin:0 0 6px;padding:0 8px}
+.element-inspector-details>summary{padding:7px 0;font-size:11px;color:#59636e;cursor:pointer}
+.element-inspector-details dl{display:grid;grid-template-columns:65px 1fr;gap:4px;font-size:11px;color:#59636e;margin:4px 0 8px}
+.element-inspector-details dd{margin:0}
+.rename-dialog-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.editor-context-menu{width:238px;padding:6px}
+.editor-context-menu p{margin:0;padding:7px 9px;font-weight:600;border-bottom:1px solid #e7ebdf}
+.editor-context-menu button{display:flex;align-items:center;gap:8px;min-height:32px;padding:6px 9px;line-height:1.4}
+.editor-context-menu button::before{content:'';width:6px;height:6px;margin:0 5px;flex:0 0 6px;border:1px solid #768390;border-radius:2px}
+.editor-context-menu kbd{float:none;margin-left:auto;font-size:10px;color:#768390;flex-shrink:0}
+.context-group-label{padding:7px 9px 3px;font-size:10px;font-weight:650;color:#768390}
+#context-add-blocks{margin-left:12px;border-left:1px solid #d8dee4;padding-left:4px}
+.category-inspector{display:grid;grid-template-columns:42px minmax(0,1fr);gap:8px;align-items:start}
+.property-icon-rail{display:flex;flex-direction:column;gap:4px;position:sticky;top:0;border-right:1px solid #d8dee4;padding-right:5px}
+.property-icon-rail button{position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border:1px solid #d8dee4;background:#f6f8fa;border-radius:6px;color:#424a53;cursor:pointer;flex-shrink:0}
+.property-icon-rail button{min-height:36px}
+.property-icon-rail button svg{display:block;flex-shrink:0}
+.property-icon-rail button:hover{background:#e4eaf0;border-color:#8c959f;color:#24292f}
+.property-icon-rail button[aria-selected=true]{background:#216e43;color:#fff;border-color:#195735;box-shadow:0 1px 3px #1f232826}
+.property-icon-rail button[aria-selected=true]::before{content:'';position:absolute;left:-4px;top:7px;bottom:7px;width:3px;border-radius:2px;background:#216e43}
+.property-icon-rail button:focus-visible{outline:2px solid #0969da;outline-offset:2px}
+.property-category-stage{min-width:0}
+.category-inspector details[hidden]{display:none!important}
+.category-inspector .property-category{margin-top:5px}

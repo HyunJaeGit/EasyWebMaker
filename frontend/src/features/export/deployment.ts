@@ -1,6 +1,6 @@
 // 출력 사이트 전용 Pages 설정. 메이커 소스·재편집 데이터는 배포 산출물에서 제외한다.
 export type HostingTarget = 'static' | 'github-pages';
-export const pagesFiles: Record<string, string> = {
+export const legacyPagesFiles: Record<string, string> = {
   '.nojekyll': '',
   '.github/workflows/site-pages.yml': `# 이 ZIP의 독립 사이트용. 메이커 자체의 워크플로와 다르다.
 name: 출력 사이트 GitHub Pages
@@ -74,3 +74,12 @@ https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-
 https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
 `,
 };
+
+export const pagesFiles = Object.fromEntries(Object.entries(legacyPagesFiles).map(([path, content]) => [path, content.replace('cp index.html styles.css script.js .nojekyll _site/', 'cp .nojekyll _site/\n          cp -- *.html *.css *.js _site/\n          if [ ! -f _site/index.html ]; then cp -- "$(find . -maxdepth 1 -name \'*.html\' | sort | head -n 1)" _site/index.html; fi').replace('index.html, styles.css, script.js,', '페이지별 HTML, CSS, JS,').replace('index.html·styles.css·script.js·assets/', '페이지별 HTML·CSS·JS·assets/')]));
+
+export function deploymentFiles(entry: string) {
+  if (!/^[a-zA-Z0-9가-힣_-]+\.html$/.test(entry)) throw new Error('배포 시작 파일 이름이 올바르지 않습니다.');
+  return Object.fromEntries(Object.entries(pagesFiles).map(([path, content]) => [path, content
+    .replace('if [ ! -f _site/index.html ]; then cp -- "$(find . -maxdepth 1 -name \'*.html\' | sort | head -n 1)" _site/index.html; fi', `cp -- "${entry}" _site/index.html`)
+    .replace('실제 배포는 수행되지 않았습니다.', `첫 페이지 ${entry}을 배포 산출물의 index.html로도 복사합니다.\n실제 배포는 수행되지 않았습니다.`)]));
+}

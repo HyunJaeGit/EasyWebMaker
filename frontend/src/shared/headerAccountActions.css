@@ -1,0 +1,9 @@
+.header-account-actions{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.premium-upgrade{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid #dfd3ed;border-radius:6px;background:#f7f3fc;color:#76559a;font:600 12px/1.3 sans-serif;white-space:nowrap;cursor:default}
+.premium-upgrade small{font-size:9px;font-weight:400;color:#8d7a9d}
+.header-login-icon{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:1px solid #d1d9e0;border-radius:50%;background:#fff;color:#354c3a}
+.header-login-icon:hover{background:#f0f3f6;border-color:#a4b69a}
+@media(max-width:480px){.maker-layout .header-inner .brand{font-size:0;gap:0;flex-shrink:0}.maker-layout .header-inner .maker-menu-host{flex:1 1 auto;min-width:0}.maker-layout .header-inner .header-account-actions{margin-left:0}.maker-layout .header-inner .command-category>summary{padding:5px 6px;font-size:10px}}
+.header-login-icon:focus-visible,.premium-upgrade:focus-visible{outline:2px solid #b38329;outline-offset:2px}
+@media(max-width:600px){.header-account-actions{gap:5px}.premium-upgrade{padding:6px 7px;font-size:10px}.premium-upgrade small{display:none}.header-login-icon{width:30px;height:30px}}
+@media(max-width:480px){.maker-layout .brand{font-size:0;gap:0;flex-shrink:0}.maker-layout .brand-mark{font-size:22px}.maker-layout .header-inner{gap:5px}.maker-layout .maker-menu-host{flex:1 1 auto;min-width:0}.maker-layout .command-category>summary{padding:5px 6px;font-size:10px}.maker-layout .maker-command-menu{gap:3px}.maker-layout .header-account-actions{margin-left:0;gap:4px}.maker-layout .premium-upgrade{padding:5px;font-size:10px;gap:3px}.maker-layout .header-login-icon{width:28px;height:28px}}

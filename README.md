@@ -63,7 +63,7 @@ npm run preview
 | `/#/maker` | 빈 프로젝트 제작 또는 기존 작업 복귀 |
 | `/#/maker?sample=school` | 학교 샘플 편집 |
 | `/#/maker?sample=public` | 공공기관 샘플 편집 |
-| `/#/save` | 프로젝트 이름·미리보기·파일 목록·통합 ZIP 다운로드 |
+| 제작 화면의 프로젝트 메뉴 | 저장·내보내기 및 검증 후 불러오기 모달 |
 | `/#/login`, `/#/signup` | 로그인·회원가입 입력 UI, 실제 인증 미연결 |
 
 첫 진입은 URL의 샘플 식별자를 반영합니다. 허용한 두 식별자만 처리하며 잘못된 식별자로 처음 진입하면 빈 구역으로 시작합니다. 잘못된 경로에는 페이지 안내를 표시합니다. 기존 작업이 있는 상태에서 다른 샘플을 선택하거나 ‘새 빈 프로젝트’를 누르면 작업 유지 또는 초기화를 선택합니다.
@@ -115,8 +115,8 @@ npm run preview
 ## 한 번에 저장·다시 편집하기
 
 1. 제작 화면의 **저장·내보내기**로 이동해 프로젝트 이름과 미리보기를 확인합니다.
-2. 배포 방식으로 **일반 정적 호스팅** 또는 **GitHub Pages**를 선택합니다. **ZIP 다운로드** 한 번으로 `index.html`, `styles.css`, `script.js`, `assets/`, `project.json`을 받습니다. Pages 선택 시 `.github/workflows/site-pages.yml`, `.nojekyll`, `DEPLOYMENT.md`도 포함됩니다. 실제 파일 목록과 크기를 표시합니다.
-3. 압축을 풀어 `index.html`을 열면 편집 엔진 없이 실행됩니다. HTML·CSS·이미지·글꼴은 상대 경로를 사용하고 이미지와 Pretendard 글꼴·라이선스를 동봉합니다. JavaScript 기능이 없는 현재 사이트의 `script.js`에는 안내 주석만 있습니다.
+2. 배포 방식으로 **일반 정적 호스팅** 또는 **GitHub Pages**를 선택합니다. **ZIP 다운로드** 한 번으로 `페이지이름.html`, `페이지이름.css`, `페이지이름.js`, `assets/`, `project.json`을 받습니다. Pages 선택 시 `.github/workflows/site-pages.yml`, `.nojekyll`, `DEPLOYMENT.md`도 포함됩니다. 실제 파일 목록과 크기를 표시합니다.
+3. 압축을 풀어 첫 페이지 HTML을 열면 편집 엔진 없이 실행됩니다. HTML·CSS·이미지·글꼴은 상대 경로를 사용하고 이미지와 Pretendard 글꼴·라이선스를 동봉합니다. JavaScript 기능이 없는 현재 사이트의 페이지별 `.js`에는 안내 주석만 있습니다.
 4. 제작 화면의 **ZIP 불러오기**에서 같은 ZIP 전체를 선택합니다. 검증을 완료한 뒤 적용을 확인하면 블록 순서·내용·스타일·이미지를 복원해 이어서 편집합니다. 정상 불러오기는 실행 기록을 새로 시작하며 기존 프로젝트가 필요하면 먼저 ZIP으로 저장합니다.
 
 `project.json` 규격은 `format: "easy-web-maker"`, `version: 2`입니다. 페이지 목록·현재 페이지 ID·페이지별 블록/CSS/body 설정, 프로젝트 이름·샘플 식별자, 자산 경로·MIME·크기·SHA-256과 전체 출력 파일 SHA-256을 포함합니다. 기존 v1 ZIP도 한 페이지로 복원합니다. 엔진의 임의 스크립트·속성을 그대로 읽지 않고 허용된 모델을 구성합니다. 출력 HTML의 편집용 속성은 제거합니다.
@@ -144,7 +144,7 @@ npm run preview
 
 2026-10-11 공식 문서를 확인해 checkout@v6·setup-node@v6·configure-pages@v5·upload-pages-artifact@v4·deploy-pages@v4를 선택했습니다. 빌드에는 `contents: read`·`pages: read`(Pages 설정 조회), 배포 작업에는 `pages: write`·`id-token: write`를 부여하고 `needs: build`, `github-pages` 환경과 배포 URL을 구성했습니다. [공식 Pages 워크플로](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages), [checkout v6](https://github.com/actions/checkout/tree/v6), [setup-node v6](https://github.com/actions/setup-node/tree/v6)를 기준으로 합니다. 제품 의존성 추가는 없습니다.
 
-메이커는 HashRouter를 사용하므로 `/저장소이름/#/maker` 새로고침에 서버 재작성이 필요하지 않습니다. Vite `base: './'`와 출력 사이트의 상대 자산 경로를 유지합니다. 일반 정적 호스팅에는 `index.html`·`styles.css`·`script.js`·`assets/`를 같은 위치에 올립니다.
+메이커는 HashRouter를 사용하므로 `/저장소이름/#/maker` 새로고침에 서버 재작성이 필요하지 않습니다. Vite `base: './'`와 출력 사이트의 상대 자산 경로를 유지합니다. 일반 정적 호스팅에는 페이지별 HTML·CSS·JS·`assets/`를 같은 위치에 올립니다.
 
 ## 의존성·글꼴
 
