@@ -77,3 +77,45 @@
 .maker-command-menu .element-properties-menu{font:inherit;font-size:12px;color:#354c3a;border:0;border-left:1px solid #e1e6da;background:white;padding:7px 8px;min-height:34px;margin-left:5px;cursor:pointer}
 .maker-command-menu .element-properties-menu:focus-visible{outline:2px solid #b38329;outline-offset:-2px}
 @media(max-width:480px){.maker-command-menu .element-properties-menu{min-height:44px}}
+
+/* 오른쪽은 구조 위·속성 아래로 나누고 두 영역은 독립적으로 스크롤한다. */
+.maker-layout .maker-workspace{grid-template-columns:190px minmax(0,1fr) 310px}
+.right-dock{display:grid;grid-template-rows:minmax(125px,32%) minmax(0,1fr);gap:8px;min-height:0;min-width:0;overflow:hidden}
+.maker-layout .right-dock .maker-panel{display:block;position:static;inset:auto;width:auto;height:100%;grid-row:auto;box-shadow:none;padding:10px}
+.maker-layout .structure-panel .panel-heading{margin-bottom:6px;padding-bottom:6px}
+.maker-layout .project-heading{margin-right:0;min-width:150px}
+.maker-layout .project-heading input{width:170px}
+.breadcrumb-divider{color:#a0ac98;font-size:22px}
+.page-heading{display:flex;gap:10px;align-items:center;margin-right:auto}
+.page-heading label{font-size:10px;color:#7b8776;display:block}
+.page-heading select,.page-heading input{display:block;min-height:29px;border:1px solid #e1e6da;border-radius:4px;background:white;font:inherit;font-size:12px;color:#354c3a;padding:3px 6px;width:150px}
+.page-name-field{position:relative}
+.page-name-field small{display:block;color:#a14f44;max-width:150px;font-size:10px}
+.property-category{border:1px solid #e1e6da;border-radius:5px;margin:8px 0;background:white}
+.property-category>summary{padding:10px;font-size:12px;font-weight:650;color:#354c3a;cursor:pointer;background:#f5f7f2;border-radius:5px}
+.property-category>summary:focus-visible,.help-topics summary:focus-visible{outline:2px solid #b38329;outline-offset:-2px}
+.property-category-content{padding:4px 10px 10px}
+.property-category .editor-field{margin-block:8px}
+.property-category .style-fields .editor-field{margin-block:5px}
+.property-category .panel-subtitle{margin-top:8px}
+.maker-help-dialog{width:min(640px,100%);max-height:85vh;max-height:85dvh;overflow:auto}
+.utility-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.help-topics details{border-top:1px solid #e1e6da;padding-block:12px}
+.help-topics summary{font-size:14px;font-weight:600;cursor:pointer}
+.maker-help-dialog p{font-size:13px;line-height:1.8;margin-block:12px}
+.maker-info-list{display:grid;grid-template-columns:100px minmax(0,1fr);gap:12px;margin:0;font-size:13px;line-height:1.7}
+.maker-info-list dt{color:#7b8776}.maker-info-list dd{margin:0;overflow-wrap:anywhere}.maker-info-list a{text-decoration:underline}
+/* 네이티브 스크롤 동작을 유지하면서 메이커의 패널·메뉴·대화상자에 같은 색상을 적용한다. */
+.maker-layout *{scrollbar-width:thin;scrollbar-color:#a4b69a #eef2eb}
+.maker-layout *::-webkit-scrollbar{width:8px;height:8px}
+.maker-layout *::-webkit-scrollbar-track{background:#eef2eb;border-radius:8px}
+.maker-layout *::-webkit-scrollbar-thumb{background:#a4b69a;border:2px solid #eef2eb;border-radius:8px}
+.maker-layout *::-webkit-scrollbar-thumb:hover{background:#778e6c}
+@media(max-width:1100px){.maker-layout .maker-workspace{grid-template-columns:165px minmax(0,1fr) 280px}}
+@media(max-width:900px){
+ .maker-layout .maker-workspace{grid-template-columns:minmax(0,1fr)}
+ .maker-layout .right-dock{display:none;position:absolute;inset:0 0 0 auto;width:min(360px,100%);z-index:5;background:#f5f6f2;box-shadow:-6px 0 20px #20302226;grid-template-rows:minmax(100px,30%) minmax(0,1fr)}
+ .maker-layout .right-dock.panel-open{display:grid}
+ .maker-layout .right-dock .layer-tree{overflow:visible;max-height:none}
+ .maker-layout .mobile-panel-tabs{gap:4px}
+}
