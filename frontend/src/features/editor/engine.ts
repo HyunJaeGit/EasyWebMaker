@@ -7,6 +7,7 @@ import fontUrl from 'pretendard/dist/web/variable/woff2/PretendardVariable.woff2
 import { bodyStyleCss, captureProject } from '../project/snapshot';
 import { englishPageNames } from '../project/pageFiles';
 import { installElementNames, normalizeElementNames, suspendElementNames } from './elementNames';
+import { createVariant, type VariantId } from '../blocks/variants';
 
 const fontStyles = `@font-face{font-family:'Pretendard Variable';src:url('${fontUrl}');font-weight:45 920;font-display:swap}`;
 export function createEditor(host: HTMLElement, data: ProjectData | undefined, sample: SampleId | undefined): Editor {
@@ -60,10 +61,10 @@ export function normalizePageNames(editor: Editor) {
 export function configureBody(editor: Editor) {
   editor.getWrapper()?.set({ droppable: true, selectable: true, hoverable: true, stylable: commonStyles, removable: false, copyable: false, draggable: false });
 }
-export function insertBlock(editor: Editor, kind: BlockKind, selected?: Component) {
+export function insertBlock(editor: Editor, kind: BlockKind, selected?: Component, variant: VariantId = 'basic') {
   const wrapper = editor.getWrapper();
   if (!wrapper) return;
-  if (selected === wrapper) { const added = wrapper.append(createBlock(kind))[0]; editor.select(added); return; }
+  if (selected === wrapper) { const added = wrapper.append(createVariant(kind, variant))[0]; editor.select(added); return; }
   if (kind === 'section') {
     const target = selected && isContainer(selected) ? selected : wrapper;
     const added = target.append(createBlock(kind))[0]; editor.select(added); return;
@@ -72,7 +73,7 @@ export function insertBlock(editor: Editor, kind: BlockKind, selected?: Componen
   while (target && !isContainer(target)) target = target.parent();
   if (!target || target === wrapper) target = wrapper.components().models.find((component: Component) => isContainer(component));
   if (!target) target = wrapper.append(createBlock('section'))[0];
-  const added = target.append(createBlock(kind))[0];
+  const added = target.append(createVariant(kind, variant))[0];
   editor.select(added);
 }
 export function moveSibling(component: Component, direction: -1 | 1) {
