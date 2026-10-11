@@ -1,4 +1,4 @@
-// 블록 구조·허용 위치·기본 콘텐츠를 정의한다. 모든 사용자 블록은 구역 안에서 조립한다.
+// 블록 구조·허용 위치·기본 콘텐츠를 정의한다. body 또는 구역 안에서 조립한다.
 import type { ComponentDefinitionDefined, Editor } from 'grapesjs';
 import type { SampleId } from '../../shared/samples';
 
@@ -9,16 +9,16 @@ export const blockCatalog = [
   { id: 'section', label: '구역·컨테이너', icon: '□' }, { id: 'footer', label: '푸터', icon: '▤' },
 ] as const;
 export type BlockKind = typeof blockCatalog[number]['id'];
-export const commonStyles = ['color', 'background-color', 'font-size', 'text-align', 'padding', 'margin', 'border', 'border-radius', 'max-width', 'gap'];
+export const commonStyles = ['color', 'background-color', 'font-size', 'text-align', 'padding', 'margin', 'border', 'border-radius', 'width', 'height', 'min-width', 'max-width', 'min-height', 'max-height', 'background-size', 'background-position', 'background-repeat', 'gap', 'opacity', 'font-family', 'font-weight', 'display', 'flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-self', 'grid-template-columns', 'position', 'top', 'right', 'bottom', 'left', 'z-index', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left'];
 const leaf = (tagName: string, content: string): ComponentDefinitionDefined => ({ type: 'ew-text', tagName, content });
 const link = (content: string, href = '#introduction'): ComponentDefinitionDefined => ({ type: 'ew-link', content, attributes: { href } });
 
 // 내장 text/link 모델은 유지하되 HTML 직접 입력과 자유 좌표 스타일은 열지 않는다.
 export function registerBlocks(editor: Editor) {
-  editor.Components.addType('ew-text', { extend: 'text', model: { defaults: { droppable: false, editable: false, draggable: '[data-ew-container]', stylable: commonStyles, toolbar: [] } } });
-  editor.Components.addType('ew-link', { extend: 'link', model: { defaults: { droppable: false, editable: false, draggable: '[data-ew-container]', stylable: commonStyles, toolbar: [] } } });
-  editor.Components.addType('ew-image', { extend: 'image', model: { defaults: { droppable: false, draggable: '[data-ew-container]', stylable: commonStyles, toolbar: [], resizable: false } } });
-  editor.Components.addType('ew-container', { model: { defaults: { tagName: 'section', attributes: { 'data-ew-container': 'true' }, droppable: true, draggable: '[data-ew-container], body', stylable: commonStyles, toolbar: [] } } });
+  editor.Components.addType('ew-text', { extend: 'text', model: { defaults: { droppable: false, editable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [] } } });
+  editor.Components.addType('ew-link', { extend: 'link', model: { defaults: { droppable: false, editable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [] } } });
+  editor.Components.addType('ew-image', { extend: 'image', model: { defaults: { droppable: false, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [], resizable: false } } });
+  editor.Components.addType('ew-container', { model: { defaults: { tagName: 'section', attributes: { 'data-ew-container': 'true' }, droppable: true, draggable: '[data-ew-container], body, [data-gjs-type="wrapper"]', stylable: commonStyles, toolbar: [] } } });
   for (const item of blockCatalog) editor.Blocks.add(item.id, { label: item.label, content: createBlock(item.id) });
 }
 

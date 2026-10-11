@@ -27,6 +27,9 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html styles.css script.js .nojekyll _site/
+          for file in page-*.html page-*.css; do
+            if [ -f "$file" ]; then cp "$file" _site/; fi
+          done
           cp -R assets _site/assets
       - uses: actions/upload-pages-artifact@v4
         with:

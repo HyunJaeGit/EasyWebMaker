@@ -1,5 +1,79 @@
-/* 메이커 패널은 사이트 캔버스와 분리한다. 작은 화면에서는 세로 접이식 패널을 사용한다. */
+/* 메이커 패널은 사이트 캔버스와 분리하고 작은 화면에서는 겹쳐 여는 패널을 사용한다. */
 .maker-page{--gjs-primary-color:#f5f6f1;--gjs-secondary-color:#53634f;--gjs-tertiary-color:#285e49;--gjs-quaternary-color:#285e49;padding:26px 24px 36px;background:#f5f6f2;color:#29362c}.maker-page[hidden]{display:none}.maker-page button{font:inherit;cursor:pointer;border:1px solid #d9dfd4;border-radius:5px;background:#fff;color:#354c3a;padding:8px 12px;min-height:42px;font-size:12px}.maker-page button:hover{background:#edf2e7}.maker-page button:focus-visible,.maker-page input:focus-visible,.maker-page textarea:focus-visible,.maker-page select:focus-visible{outline:2px solid #b38329;outline-offset:2px}.maker-page button:disabled{cursor:default;opacity:.45}.maker-toolbar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}.project-heading{margin-right:auto}.project-heading label{display:block;font-size:10px;color:#7b8776}.project-heading input{display:block;width:min(270px,100%);padding:2px 0;background:transparent;border:0;font-weight:650;font-size:20px;color:#2b3d30;line-height:1.5}.history-controls,.device-controls{display:flex;gap:5px;flex-wrap:wrap}.device-controls button[aria-pressed=true]{background:#e2eadb;border-color:#aabb9f;color:#2f5137}.maker-page .preview-button{background:#285e49;color:white;border-color:#285e49}.maker-page .preview-button:hover{background:#1f4937}.save-guide-link{font-size:12px;padding:9px}.maker-notice{font-size:12px;color:#687960;margin-bottom:12px;min-height:20px}.mobile-panel-tabs{display:none}.maker-workspace{display:grid;grid-template-columns:220px minmax(0,1fr) 270px;gap:16px;align-items:start}.maker-panel{background:white;border:1px solid #e1e6da;border-radius:7px;padding:18px;max-height:760px;overflow:auto;scrollbar-width:thin;min-width:0}.panel-heading{border-bottom:1px solid #e7ebdf;padding-bottom:14px;margin-bottom:18px;display:flex;flex-direction:column;gap:4px}.panel-heading h2{font-size:15px}.panel-heading small,.editor-help{font-size:10px;color:#7e8a75;line-height:1.8}.block-buttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.block-buttons button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:73px;padding:8px 3px;font-size:11px}.block-buttons button span{font-size:22px;line-height:1.2;color:#667e59}.blocks-panel>.editor-help{margin-top:13px}.panel-subtitle{font-size:13px;margin-top:24px;margin-bottom:12px}.layer-tree{display:flex;flex-direction:column;gap:4px}.layer-tree button{text-align:left;border-color:transparent;padding-block:7px;overflow-wrap:anywhere;display:flex;align-items:center;gap:5px}.layer-tree small{margin-left:auto;color:#929c89;font-size:9px}.layer-tree .layer-selected{background:#e9f0e2;border-color:#c7d5be}.canvas-column{min-width:0;border:1px solid #e1e6da;border-radius:7px;background:white;overflow:hidden}.canvas-heading{display:flex;justify-content:space-between;gap:12px;padding:12px 16px;background:#fff;border-bottom:1px solid #e3e8db;font-size:12px}.canvas-heading small{font-size:10px;color:#87927d}.canvas-host{height:680px;min-width:0;overflow:auto;background:#e5e8df}.canvas-host .gjs-cv-canvas{width:100%;height:100%;top:0;left:0;background:#e9ece4}.canvas-host .gjs-frame-wrapper{max-width:none}.canvas-bottom-note{padding:11px 14px;font-size:10px;color:#7f8a75;line-height:1.7}.canvas-host .gjs-one-bg{background:#285e49}.canvas-host .gjs-two-color{color:#fff}.canvas-host .gjs-toolbar{display:none}.panel-empty{font-size:13px;color:#8c9781;padding-block:28px;line-height:1.9}.inspector-title{padding-bottom:12px}.inspector-title>span{font-size:10px;color:#7b8970}.inspector-title h3{font-size:16px;margin-top:5px}.component-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-bottom:16px}.component-actions .danger{color:#a14f44}.editor-field{display:flex;flex-direction:column;gap:6px;font-size:11px;color:#617154;margin-block:13px}.editor-field input,.editor-field select,.editor-field textarea{font:inherit;font-size:13px;color:#34462e;width:100%;min-width:0;min-height:40px;border:1px solid #dbe3d1;background:#fff;border-radius:4px;padding:8px;line-height:1.6}.editor-field textarea{resize:vertical;min-height:95px}.editor-field input[type=file]{font-size:10px;padding:6px}.editor-field input[type=color]{padding:4px;height:40px;cursor:pointer}.editor-field small{font-size:10px;color:#849179}.style-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 10px}.style-fields .editor-field{margin-block:6px}.panel-button{width:100%;margin-top:5px}.editor-modal-backdrop{position:fixed;inset:0;z-index:100;background:#20302285;display:flex;align-items:center;justify-content:center;padding:20px}.project-dialog{background:white;width:min(460px,100%);padding:28px;border-radius:9px}.project-dialog h2{font-size:22px}.project-dialog p{font-size:14px;color:#718267;margin-block:18px}.project-dialog>div{display:flex;gap:12px;flex-wrap:wrap}.preview-dialog{width:min(1300px,100%);height:90vh;background:#f0f3ed;border-radius:9px;overflow:hidden;display:flex;flex-direction:column}.preview-toolbar{display:flex;gap:18px;padding:15px;align-items:center;flex-wrap:wrap;background:white;border-bottom:1px solid #dae2d1}.preview-toolbar h2{font-size:16px;margin-right:auto}.preview-stage{overflow:auto;flex:1;padding:22px;display:flex;align-items:stretch;justify-content:flex-start}.preview-stage iframe{border:0;min-width:0;flex-shrink:0;background:white;min-height:100%;margin-inline:auto}.maker-page .gjs-editor{background:#e5e8df}
 @media(max-width:1100px){.maker-workspace{grid-template-columns:180px minmax(0,1fr) 235px;gap:10px}.maker-panel{padding:13px}.maker-page{padding:22px 16px}.maker-toolbar{gap:10px}.canvas-heading{flex-direction:column;gap:2px}.canvas-host{height:640px}}
 @media(max-width:900px){.maker-workspace{grid-template-columns:1fr}.mobile-panel-tabs{display:flex;gap:10px;margin-block:14px}.mobile-panel-tabs button{flex:1}.maker-panel{display:none;max-height:460px;padding:18px}.maker-panel.panel-open{display:block}.blocks-panel{grid-row:1}.canvas-column{grid-row:2}.properties-panel{grid-row:3}.block-buttons{grid-template-columns:repeat(4,minmax(0,1fr))}.layer-tree{max-height:240px;overflow:auto}.canvas-host{height:590px}.canvas-heading{flex-direction:row}.project-heading{flex-basis:100%}.properties-panel.panel-open{scroll-margin-top:16px}.style-fields{grid-template-columns:repeat(4,minmax(0,1fr))}.preview-toolbar{gap:10px}.preview-stage{padding:12px}.preview-toolbar h2{flex-basis:100%}}
 @media(max-width:480px){.maker-page{padding:20px 12px}.maker-toolbar{gap:9px}.maker-page button{font-size:11px;min-height:44px;padding:8px 10px}.history-controls{flex-basis:100%}.history-controls button{flex:1}.device-controls{gap:3px}.device-controls button{padding:7px 9px}.save-guide-link{padding:7px;font-size:11px}.block-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}.canvas-heading{flex-direction:column}.canvas-host{height:530px}.maker-panel{max-height:490px}.style-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.editor-modal-backdrop{padding:8px}.preview-dialog{height:94vh}.preview-stage{padding:6px}.preview-toolbar{padding:10px}.project-dialog{padding:22px}.maker-notice{font-size:11px}}
+/* 구조 트리의 펼침 버튼과 선택 버튼을 분리해 클릭·키보드·터치로 탐색한다. */
+.structure-tree ul{list-style:none;margin:0;padding:0}.structure-tree ul ul{padding-left:12px;border-left:1px solid #e3e8db;margin-left:12px}.structure-row{display:flex;align-items:center;min-width:0}.structure-row:hover{background:#f2f6ee}.structure-toggle,.structure-spacer{width:28px;flex-shrink:0}.structure-tree .structure-toggle{justify-content:center;padding:5px;min-height:36px}.structure-tree .structure-select{flex:1;min-width:0;padding:7px 5px}.structure-select small{flex-shrink:0}.structure-tree .editor-help{margin-bottom:8px}
+/* 캔버스 iframe 밖에 메뉴를 표시해 화면 모서리와 패널에 잘리지 않게 한다. */
+.editor-context-menu{position:fixed;z-index:90;width:190px;max-width:calc(100vw - 16px);max-height:calc(100vh - 16px);overflow:auto;background:white;border:1px solid #d9e2d1;border-radius:7px;padding:7px;box-shadow:0 8px 30px #20302226}.editor-context-menu p{font-size:11px;color:#718267;padding:7px;overflow-wrap:anywhere}.editor-context-menu button{display:block;width:100%;text-align:left;min-height:36px;border:0;background:white;font:inherit;font-size:13px;color:#34462e;padding:8px;border-radius:4px;cursor:pointer}.editor-context-menu button:hover,.editor-context-menu button:focus-visible{background:#e9f0e2;outline:2px solid #b38329;outline-offset:-2px}.editor-context-menu button:disabled{color:#a6ada0;cursor:default;background:white;outline:0}.editor-context-menu hr{border:0;border-top:1px solid #e7ebdf;margin:5px 0}
+
+/* 제작 화면은 뷰포트 안에 고정하고 긴 내용은 패널·캔버스 안에서만 스크롤한다. */
+.maker-layout{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.maker-layout>.header{flex-shrink:0;background:white}
+.maker-layout .header-inner{width:calc(100% - 24px);min-height:48px;height:48px;padding:0;gap:28px;flex-wrap:nowrap}
+.maker-layout .brand{font-size:15px;gap:8px}
+.maker-layout .brand-mark{width:27px;height:27px;font-size:24px;line-height:25px}
+.maker-layout .nav{width:auto;order:0;gap:22px;min-height:0;font-size:12px}
+.maker-layout .nav a{padding:0}
+.maker-layout .account-nav{font-size:11px;gap:12px}
+.maker-layout .signup-link{padding:5px 9px}
+.maker-layout>main{flex:1;min-height:0;overflow:hidden}
+.maker-layout>.footer{display:none}
+.maker-layout .maker-page{height:100%;display:flex;flex-direction:column;padding:8px 12px;min-height:0}
+.maker-layout .maker-page[hidden]{display:none}
+.maker-layout .maker-toolbar{flex-shrink:0;flex-wrap:nowrap;gap:8px;margin-bottom:5px;overflow-x:auto;padding-bottom:3px;scrollbar-width:thin}
+.maker-layout .maker-toolbar>*{flex-shrink:0}
+.maker-layout .project-heading{flex-basis:auto;min-width:160px;margin-right:auto}
+.maker-layout .project-heading .section-kicker{display:none}
+.maker-layout .project-heading label{font-size:10px}
+.maker-layout .project-heading input{width:170px;font-size:15px}
+.maker-layout .maker-toolbar button{min-height:34px;padding:6px 9px;white-space:nowrap}
+.maker-layout .history-controls,.maker-layout .device-controls{flex-basis:auto;flex-wrap:nowrap;gap:3px}
+.maker-layout .save-guide-link{white-space:nowrap;padding:8px;font-size:12px}
+.maker-layout .maker-notice{flex-shrink:0;margin-bottom:5px;font-size:11px;min-height:18px;max-height:42px;overflow:auto}
+.maker-layout .maker-workspace{flex:1;min-height:0;align-items:stretch;gap:10px;position:relative}
+.maker-layout .maker-panel{height:100%;max-height:none;min-height:0;padding:12px;overscroll-behavior:contain}
+.maker-layout .panel-heading{padding-bottom:9px;margin-bottom:12px}
+.maker-layout .canvas-column{display:flex;flex-direction:column;min-height:0}
+.maker-layout .canvas-heading{flex-shrink:0;padding:7px 10px;flex-direction:row;align-items:center}
+.maker-layout .canvas-host{height:auto;flex:1;min-height:0;overscroll-behavior:contain}
+.maker-layout .canvas-bottom-note{flex-shrink:0;padding:4px 10px;font-size:9px}
+@media(max-width:900px){
+ .maker-layout .account-nav{display:none}
+ .maker-layout .maker-workspace{grid-template-columns:minmax(0,1fr)}
+ .maker-layout .canvas-column{grid-row:1}
+ .maker-layout .mobile-panel-tabs{flex-shrink:0;margin:0 0 5px;gap:6px}
+ .maker-layout .mobile-panel-tabs button{min-height:38px;padding:6px 10px}
+ .maker-layout .maker-panel{display:none;position:absolute;inset:0 auto 0 0;width:min(360px,100%);z-index:5;box-shadow:6px 0 20px #20302226}
+ .maker-layout .maker-panel.panel-open{display:block}
+ .maker-layout .properties-panel{inset:0 0 0 auto}
+ .maker-layout .block-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .maker-layout .style-fields{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .maker-layout .layer-tree{max-height:none;overflow:visible}
+}
+@media(max-width:480px){
+ .maker-layout .header-inner{width:calc(100% - 16px);gap:16px;height:44px;min-height:44px}
+ .maker-layout .brand{font-size:13px}
+ .maker-layout .nav{margin-left:auto;gap:14px;font-size:12px}
+ .maker-layout .maker-page{padding:6px}
+ .maker-layout .maker-toolbar button{min-height:44px}
+ .maker-layout .mobile-panel-tabs button{min-height:44px}
+ .maker-layout .canvas-heading small{display:none}
+ .maker-layout .canvas-bottom-note{display:none}
+}
+
+/* 프로젝트 명령은 로고 바로 옆에 모으고 작은 화면에서는 명령 줄만 가로로 이동한다. */
+.maker-layout .header-inner{gap:12px}
+.maker-menu-host{flex:1;min-width:0;overflow-x:auto;scrollbar-width:thin}
+.maker-command-menu{display:flex;align-items:center;gap:2px;width:max-content;padding:2px 0}
+.maker-command-menu button,.maker-command-menu .save-guide-link{font:inherit;font-size:12px;background:transparent;border:0;border-radius:4px;color:#354c3a;padding:7px 10px;min-height:34px;white-space:nowrap;cursor:pointer}
+.maker-command-menu button:hover,.maker-command-menu .save-guide-link:hover{background:#edf2e7}
+.maker-command-menu button:disabled{opacity:.4;cursor:default}
+.maker-command-menu button:focus-visible,.maker-command-menu a:focus-visible{outline:2px solid #b38329;outline-offset:-2px}
+.maker-command-menu .history-controls{gap:2px;flex-wrap:nowrap;border-left:1px solid #e1e6da;margin-left:5px;padding-left:5px}
+@media(max-width:480px){.maker-layout .header-inner{gap:8px}.maker-command-menu button,.maker-command-menu .save-guide-link{min-height:44px;padding:7px 9px}.maker-layout .header-inner{height:48px;min-height:48px}}
+/* 상단 속성 메뉴는 선택한 요소의 기존 패널 입력으로 바로 이동한다. */
+.maker-command-menu .element-properties-menu{font:inherit;font-size:12px;color:#354c3a;border:0;border-left:1px solid #e1e6da;background:white;padding:7px 8px;min-height:34px;margin-left:5px;cursor:pointer}
+.maker-command-menu .element-properties-menu:focus-visible{outline:2px solid #b38329;outline-offset:-2px}
+@media(max-width:480px){.maker-command-menu .element-properties-menu{min-height:44px}}

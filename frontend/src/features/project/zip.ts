@@ -15,7 +15,7 @@ function directory(bytes: Uint8Array): Entry[] {
   for (let index = bytes.length - 22; index >= Math.max(0, bytes.length - 65557); index--) if (view.getUint32(index, true) === 0x06054b50 && index + 22 + view.getUint16(index + 20, true) === bytes.length) { end = index; break; }
   if (end < 0 || view.getUint16(end + 4, true) || view.getUint16(end + 6, true)) throw new Error('손상되었거나 지원하지 않는 ZIP입니다.');
   const count = view.getUint16(end + 10, true); const size = view.getUint32(end + 12, true); let offset = view.getUint32(end + 16, true);
-  if (count > 110 || count !== view.getUint16(end + 8, true) || offset + size !== end) throw new Error('ZIP 파일 목록이 올바르지 않습니다.');
+  if (count > 150 || count !== view.getUint16(end + 8, true) || offset + size !== end) throw new Error('ZIP 파일 목록이 올바르지 않습니다.');
   const entries: Entry[] = []; const names = new Set<string>(); let total = 0;
   for (let index = 0; index < count; index++) {
     if (offset + 46 > end || view.getUint32(offset, true) !== 0x02014b50) throw new Error('ZIP 파일 목록이 손상되었습니다.');
@@ -23,7 +23,7 @@ function directory(bytes: Uint8Array): Entry[] {
     if (offset + 46 + nameLength + extraLength + commentLength > end) throw new Error('ZIP 파일 목록이 잘렸습니다.');
     const name = new TextDecoder('utf-8', { fatal: true }).decode(bytes.subarray(offset + 46, offset + 46 + nameLength));
     const entrySize = view.getUint32(offset + 24, true); const method = view.getUint16(offset + 10, true);
-    if ((!/^(index\.html|styles\.css|script\.js|project\.json|assets\/|assets\/[a-zA-Z\d_.-]+)$/.test(name) && !Object.hasOwn(pagesFiles, name)) || name.includes('..') || names.has(name) || (view.getUint16(offset + 8, true) & 1) || ![0, 8].includes(method)) throw new Error('허용하지 않는 ZIP 경로·암호화·압축 방식입니다.');
+    if ((!/^(index\.html|styles\.css|script\.js|project\.json|page-(?:[2-9]|1[0-9]|20)\.(?:html|css)|assets\/|assets\/[a-zA-Z\d_.-]+)$/.test(name) && !Object.hasOwn(pagesFiles, name)) || name.includes('..') || names.has(name) || (view.getUint16(offset + 8, true) & 1) || ![0, 8].includes(method)) throw new Error('허용하지 않는 ZIP 경로·암호화·압축 방식입니다.');
     if (entrySize > MAX_ENTRY_BYTES || (name === 'project.json' && entrySize > 2 * 1024 * 1024) || (total += entrySize) > MAX_TOTAL_BYTES) throw new Error('ZIP의 압축 해제 크기 제한을 초과했습니다.');
     names.add(name); entries.push({ name, size: entrySize, crc: view.getUint32(offset + 16, true) });
     offset += 46 + nameLength + extraLength + commentLength;
