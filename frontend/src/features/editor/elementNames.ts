@@ -3,7 +3,7 @@ import type { Component, Editor } from 'grapesjs';
 const suspended = new WeakSet<Editor>();
 const counters = new WeakMap<Component, Map<string, number>>();
 const seen = new WeakSet<Component>();
-const defaults = new Set(['헤더·메뉴', '히어로', '메뉴', '카드 묶음', '카드', '새 구역', '푸터']);
+const defaults = new Set(['헤더·메뉴', '히어로', '메뉴', '카드 묶음', '카드', '새 구역', '푸터', '갤러리', '사진 묶음', '안내·CTA', '연락처']);
 const types: Record<string, string> = { 'ew-text': '텍스트', 'ew-image': '이미지', 'ew-link': '버튼·링크', 'ew-container': '구역' };
 function walk(root: Component, visit: (component: Component) => void) { root.components().forEach((child: Component) => { if (types[String(child.get('type'))]) visit(child); walk(child, visit); }); }
 function rootOf(component: Component) { let root = component; while (root.parent()) root = root.parent()!; return root; }

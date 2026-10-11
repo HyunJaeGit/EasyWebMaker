@@ -301,6 +301,7 @@
 .block-sample-heading button{width:36px;height:36px;padding:0;border:1px solid #d8dee4;border-radius:6px;background:#f6f8fa;color:#57606a;font-size:24px;cursor:pointer}
 .block-sample-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .block-sample-grid>button{position:relative;min-width:0;padding:10px;border:1px solid #d8dee4;border-radius:8px;background:#f6f8fa;cursor:pointer}
+.block-sample-name{display:block;margin-top:9px;font-size:13px;font-weight:600;line-height:1.5;color:#344054}
 .block-sample-grid>button:hover{background:#eaf4ec;border-color:#86b99b}
 .block-sample-dialog button:focus-visible{outline:2px solid #0969da;outline-offset:2px}
 .block-sample-grid .block-preview{height:120px;padding:16px;gap:8px}

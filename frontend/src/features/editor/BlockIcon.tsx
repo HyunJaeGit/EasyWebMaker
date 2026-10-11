@@ -8,6 +8,9 @@ const paths: Record<BlockKind, string> = {
   link: 'M10 13a4 4 0 0 0 6 0l4-4a4 4 0 0 0-6-6l-3 3 M14 11a4 4 0 0 0-6 0l-4 4a4 4 0 0 0 6 6l3-3',
   section: 'M3 3h18v18H3z M7 7h10v10H7z',
   footer: 'M3 4h18v16H3z M3 14h18 M6 17h5 M15 17h3',
+  gallery: 'M7 3h14v14 M3 7h14v14H3z M3 18l5-5 4 4 2-2 3 3 M12 11h.01',
+  cta: 'M3 5h18v14H3z M6 9h7 M6 14h5 M15 11h4 M17 9l2 2-2 2',
+  contact: 'M3 5h18v14H3z M3 5l9 7 9-7',
 };
 export function BlockIcon({ kind }: { kind: BlockKind }) {
   return <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" focusable="false"><path d={paths[kind]} /></svg>;

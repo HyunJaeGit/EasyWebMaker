@@ -7,6 +7,8 @@ export const blockCatalog = [
   { id: 'text', label: '텍스트', icon: 'T' }, { id: 'image', label: '이미지', icon: '▧' },
   { id: 'cards', label: '카드 묶음', icon: '▦' }, { id: 'link', label: '버튼·링크', icon: '↗' },
   { id: 'section', label: '구역·컨테이너', icon: '□' }, { id: 'footer', label: '푸터', icon: '▤' },
+  { id: 'gallery', label: '갤러리', icon: '▧' }, { id: 'cta', label: '안내·CTA', icon: '↗' },
+  { id: 'contact', label: '연락처', icon: '✉' },
 ] as const;
 export type BlockKind = typeof blockCatalog[number]['id'];
 export const commonStyles = ['color', 'background-color', 'font-size', 'text-align', 'padding', 'margin', 'border', 'border-radius', 'width', 'height', 'min-width', 'max-width', 'min-height', 'max-height', 'background-size', 'background-position', 'background-repeat', 'gap', 'opacity', 'font-family', 'font-weight', 'display', 'flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-self', 'grid-template-columns', 'position', 'top', 'right', 'bottom', 'left', 'z-index', 'padding-top', 'padding-right', 'padding-bottom', 'padding-left', 'margin-top', 'margin-right', 'margin-bottom', 'margin-left'];
@@ -36,6 +38,9 @@ export function createBlock(kind: BlockKind): ComponentDefinitionDefined {
     case 'link': return link('자세히 보기');
     case 'section': return container('새 구역', [], 'section', ['ew-section']);
     case 'footer': return container('푸터', [leaf('p', '우리의 웹사이트'), leaf('p', '주소와 연락처를 입력하세요.'), leaf('small', '© 나의 웹사이트. 모든 권리 보유.')], 'footer', ['ew-footer']);
+    case 'gallery': return container('갤러리', [leaf('h2', '사진으로 보는 이야기'), container('사진 묶음', Array.from({ length: 3 }, () => createBlock('image')), 'div', ['ew-cards'])], 'section', ['ew-section']);
+    case 'cta': return { ...container('안내·CTA', [leaf('h2', '다음 이야기를 함께 시작해요'), leaf('p', '방문자에게 안내할 내용을 입력하세요.'), { ...link('더 알아보기'), classes: ['ew-button'] }], 'section', ['ew-section']), style: { 'background-color': '#e4edf6', 'border-radius': '12px' } };
+    case 'contact': return container('연락처', [leaf('h2', '연락하기'), leaf('p', '주소: 이곳에 주소를 입력하세요.'), leaf('p', '운영 시간: 이곳에 운영 시간을 입력하세요.'), { ...link('이메일 보내기', 'mailto:hello@example.com'), classes: ['ew-button'] }], 'section', ['ew-section']);
   }
 }
 
