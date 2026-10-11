@@ -1,0 +1,47 @@
+# 메이커 자체를 빌드한다. 출력 ZIP의 site-pages.yml과 별개의 워크플로다.
+name: 메이커 GitHub Pages
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: maker-pages
+  cancel-in-progress: false
+jobs:
+  build:
+    permissions:
+      contents: read
+      pages: read
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - uses: actions/configure-pages@v5
+      - run: npm ci
+      # build 스크립트에 TypeScript 검사가 포함되어 있다.
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: frontend/dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Pages 배포
+        id: deployment
+        uses: actions/deploy-pages@v4

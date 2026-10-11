@@ -1,1 +1,133 @@
-# EasyWebMaker
+# 이지웹메이커
+
+학교·공공기관 스타일 샘플에서 웹사이트를 제작하는 서비스입니다. **Phase 1~5의 첫 MVP 기능·로컬 통합 검증·배포 파일 준비**를 완료했습니다. 실제 인증과 공개 배포는 수행하지 않았습니다. 기획안은 읽기 전용으로 유지하며 Phase 번호는 사용자 요청 기준입니다.
+
+## 설치·실행 (Git Bash)
+
+Node.js **24.16.0**, npm **11.13.0**에서 검증했습니다. `.nvmrc`에 Node 버전을 고정했습니다. [Vite 공식 호환 안내](https://vite.dev/guide/)를 확인한 구성입니다.
+
+```bash
+cd frontend
+npm ci
+npm run dev
+```
+
+터미널의 Local 주소를 엽니다. 기본 주소는 `http://localhost:5173`입니다.
+
+```bash
+# 타입 검사
+npm run typecheck
+# 타입 검사 + 프로덕션 빌드
+npm run build
+# 빌드 결과 로컬 확인
+npm run preview
+```
+
+빌드 결과는 `frontend/dist/`에 생성됩니다.
+
+## 구조·현재 범위
+
+| 경로 | 역할 |
+| --- | --- |
+| `frontend/src/app/` | 공통 레이아웃, 해시 라우팅, 제작 화면 지연 로딩·유지 |
+| `frontend/src/pages/` | 홈·블록 제작·ZIP 저장·회원 입력 화면 |
+| `frontend/src/features/blocks/` | 블록 정의, 삽입 규칙, 실제 편집 샘플·사이트 CSS |
+| `frontend/src/features/editor/` | GrapesJS 연동, 구조 조작, 속성 패널·미리보기 |
+| `frontend/src/features/project/` | 현재 프로젝트 메모리 상태·이름 |
+| `frontend/src/features/project/format·validation·zip·import.ts` | 버전 규격, ZIP 무결성·구조·참조 검사, 재편집 복원 |
+| `frontend/src/features/export/` | 이미지·글꼴 패키징, 독립 HTML·CSS·JS, 저장 화면 스타일 |
+| `.github/workflows/maker-pages.yml` | 메이커 자체 frontend 설치·타입 검사·빌드·Pages 배포 준비 |
+| `frontend/src/shared/` | 반응형 스타일, 샘플 정보와 미리보기 |
+| `frontend/public/` | 자체 파비콘, 글꼴 라이선스 |
+| `backend/` | 향후 Java·Spring Boot 안내만 제공 |
+| `DEVELOPMENT_STATUS.md` | 확정 결정·완료 범위·검증·남은 작업 |
+
+홈에는 서비스 설명, 제작 과정, 가상 학교 ‘새봄학교’와 가상 공공기관 ‘온빛생활문화원’ 미리보기를 제공합니다. 그림은 CSS로 직접 구성했고 실제 기관의 로고·이미지·콘텐츠를 복제하지 않았습니다.
+
+| URL | 현재 동작 |
+| --- | --- |
+| `/#/` | 반응형 홈 |
+| `/#/maker` | 빈 프로젝트 제작 또는 기존 작업 복귀 |
+| `/#/maker?sample=school` | 학교 샘플 편집 |
+| `/#/maker?sample=public` | 공공기관 샘플 편집 |
+| `/#/save` | 프로젝트 이름·미리보기·파일 목록·통합 ZIP 다운로드 |
+| `/#/login`, `/#/signup` | 로그인·회원가입 입력 UI, 실제 인증 미연결 |
+
+첫 진입은 URL의 샘플 식별자를 반영합니다. 허용한 두 식별자만 처리하며 잘못된 식별자로 처음 진입하면 빈 구역으로 시작합니다. 잘못된 경로에는 페이지 안내를 표시합니다. 기존 작업이 있는 상태에서 다른 샘플을 선택하거나 ‘새 빈 프로젝트’를 누르면 작업 유지 또는 초기화를 선택합니다.
+
+## 블록 제작 사용법
+
+1. 홈에서 빈 시작 또는 샘플을 선택합니다.
+2. 구역을 선택하고 블록 목록을 누르거나 PC에서 캔버스 안으로 드래그합니다. 기본 블록은 헤더·메뉴, 히어로, 텍스트, 이미지, 카드 묶음, 버튼·링크, 구역·컨테이너, 푸터입니다.
+3. 캔버스 또는 페이지 구조에서 블록을 선택해 속성에서 내용·링크·이미지·색상·글자 크기·정렬·여백·테두리·모서리를 수정합니다. 이미지 업로드는 PNG·JPG·WebP·GIF, 최대 5 MB입니다.
+4. 위·아래 이동, 복제·삭제, 대상 구역 이동을 이용합니다. 카드 묶음에서는 카드 추가·열 변경이 가능하고 카드 선택 후 삭제·이동합니다.
+5. 실행 취소·다시 실행과 PC·태블릿·모바일 캔버스·미리보기를 확인합니다. 미리보기에는 편집 도구가 포함되지 않습니다.
+
+작은 화면에서는 ‘블록·구조’와 ‘속성’ 패널을 접고 펼칩니다. 터치는 클릭 삽입·캔버스 선택·순서 이동 버튼을 이용합니다. 기기 너비가 가용 공간보다 크면 캔버스 내부를 가로로 이동할 수 있습니다.
+
+편집 내용과 실행 기록은 **현재 탭에서 페이지를 이동하는 동안** 유지합니다. 저장 화면의 ‘편집으로 돌아가기’도 작업을 유지합니다. 자동 영구 저장은 없으며 새로고침·탭 종료 후에는 저장한 ZIP을 직접 불러옵니다. 실제 편집 후 문서를 떠나면 브라우저의 이탈 안내를 요청합니다. 샘플 소식은 정적 예시이며 게시판·검색·접수 기능은 없습니다.
+
+## 로그인·회원가입 UI
+
+로그인과 회원가입은 서로 이동할 수 있고, 필수 입력·이메일 형식·비밀번호 확인 오류를 입력 아래에 표시합니다. **인증 서비스는 연결되지 않았습니다.** 유효한 입력을 제출해도 미연결 안내만 표시하며 로그인·계정 생성을 처리하지 않습니다. 제출 후 입력을 비우고, 화면을 떠날 때도 초기화합니다. 입력 정보는 서버·브라우저 영구 저장소·프로젝트에 보관하지 않습니다. 기본 제작과 ZIP 저장은 로그인 없이 이용할 수 있습니다.
+
+추가 샘플·테마와 구독 고급 기능의 향후 연결 위치는 [회원 확장 기록](frontend/docs/ACCOUNT_EXTENSION.md)에 정리했습니다. 실제 API·세션·결제·기능 잠금은 이번 범위에 없습니다. 의존성은 추가하지 않았습니다.
+
+## 한 번에 저장·다시 편집하기
+
+1. 제작 화면의 **저장·내보내기**로 이동해 프로젝트 이름과 미리보기를 확인합니다.
+2. 배포 방식으로 **일반 정적 호스팅** 또는 **GitHub Pages**를 선택합니다. **ZIP 다운로드** 한 번으로 `index.html`, `styles.css`, `script.js`, `assets/`, `project.json`을 받습니다. Pages 선택 시 `.github/workflows/site-pages.yml`, `.nojekyll`, `DEPLOYMENT.md`도 포함됩니다. 실제 파일 목록과 크기를 표시합니다.
+3. 압축을 풀어 `index.html`을 열면 편집 엔진 없이 실행됩니다. HTML·CSS·이미지·글꼴은 상대 경로를 사용하고 이미지와 Pretendard 글꼴·라이선스를 동봉합니다. JavaScript 기능이 없는 현재 사이트의 `script.js`에는 안내 주석만 있습니다.
+4. 제작 화면의 **ZIP 불러오기**에서 같은 ZIP 전체를 선택합니다. 검증을 완료한 뒤 적용을 확인하면 블록 순서·내용·스타일·이미지를 복원해 이어서 편집합니다. 정상 불러오기는 실행 기록을 새로 시작하며 기존 프로젝트가 필요하면 먼저 ZIP으로 저장합니다.
+
+`project.json` 규격은 `format: "easy-web-maker"`, `version: 1`입니다. 프로젝트 이름·샘플 식별자, 블록 식별자·종류·계층·순서·내용·스타일, 전체 사이트 CSS, 자산 경로·MIME·크기·SHA-256과 출력 파일 SHA-256을 포함합니다. 엔진의 임의 스크립트·속성을 그대로 읽지 않고 허용된 모델을 구성합니다. 출력 HTML의 편집용 속성은 제거합니다.
+
+잘못된 ZIP은 CRC·크기·경로·필수 파일·버전·블록 구조·자산 참조·해시·이미지 내용을 검사하고 오류를 안내하며 현재 작업과 실행 기록을 유지합니다. 외부 HTML의 완전한 역수입은 지원하지 않습니다. 출력 HTML·CSS·JS를 재편집 원본으로 사용하지 않으며 가져온 JavaScript는 실행하지 않습니다.
+
+제한: ZIP 25 MB, 압축 해제 총 32 MB, 개별 파일 8 MB, `project.json` 2 MB, 이미지 5 MB, 자산 100개, 블록 2,000개·중첩 20단계. 기본 SVG와 PNG·JPG·WebP·GIF 이미지를 패키징하며 실행 코드·외부 참조가 들어간 SVG는 받지 않습니다. 외부 이미지의 CORS·네트워크·형식 문제로 다운로드하지 못하면 저장을 중단합니다. 이미지를 누락한 ZIP을 만들지 않으며 기기의 이미지로 교체할 수 있습니다.
+
+기존 Phase 3 ZIP과 Pages용 ZIP 모두 불러올 수 있습니다. Pages 부가 파일은 앱이 만든 완전한 묶음을 검증하며, 파일이 누락되거나 임의 수정되면 원본 ZIP을 요청합니다. 해당 파일을 실행하지 않습니다. 온라인 저장·백엔드·React 코드 출력은 이번 범위에 없습니다.
+
+## 메이커와 출력 사이트의 배포 준비
+
+아래는 향후 사용자가 진행할 절차입니다. **파일 준비와 로컬 검증만 완료했으며 저장소 생성·연결, push, Actions 실행, 공개 배포는 하지 않았습니다.**
+
+| 구분 | 메이커 자체 | ZIP 출력 사이트 |
+| --- | --- | --- |
+| 워크플로 | 루트 `.github/workflows/maker-pages.yml` | ZIP `.github/workflows/site-pages.yml` |
+| 입력 | `frontend/` React 소스·lock 파일·루트 `.nvmrc` | 압축 해제한 독립 HTML·CSS·JS·assets |
+| 처리 | Node 24.16.0, `npm ci`, `npm run build`(타입 검사 포함) | Node 설치 없이 사이트 파일만 `_site/`에 복사 |
+| Pages 산출물 | `frontend/dist/` | `_site/` (project.json·배포 안내 제외) |
+
+메이커 저장소에는 frontend·루트 .nvmrc·메이커 워크플로를 유지합니다. 출력 사이트는 **별도 저장소 루트**에 ZIP의 사이트 파일과 숨김 `.github/`·`.nojekyll`을 둡니다. 두 워크플로를 같은 사이트 배포에 혼용하지 않습니다. 재편집 ZIP은 별도 보관하며, 공개 저장소에 project.json을 올리면 소스 자체는 공개됩니다.
+
+각 저장소에서 **Settings → Pages → Build and deployment → Source: GitHub Actions**를 선택합니다. 기본 브랜치가 main이 아니면 워크플로의 `branches: [main]`을 실제 브랜치명으로 바꾸고 `github-pages` 환경의 허용 브랜치·승인 규칙을 확인합니다. 워크플로는 main 반영 또는 수동 실행으로 동작하도록 작성했으며, 실행 후 URL에서 직접 확인해야 실제 배포 검증이 완료됩니다. 자세한 근거는 [공식 Pages 설정 문서](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)입니다.
+
+2026-10-11 공식 문서를 확인해 checkout@v6·setup-node@v6·configure-pages@v5·upload-pages-artifact@v4·deploy-pages@v4를 선택했습니다. 빌드에는 `contents: read`·`pages: read`(Pages 설정 조회), 배포 작업에는 `pages: write`·`id-token: write`를 부여하고 `needs: build`, `github-pages` 환경과 배포 URL을 구성했습니다. [공식 Pages 워크플로](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages), [checkout v6](https://github.com/actions/checkout/tree/v6), [setup-node v6](https://github.com/actions/setup-node/tree/v6)를 기준으로 합니다. 제품 의존성 추가는 없습니다.
+
+메이커는 HashRouter를 사용하므로 `/저장소이름/#/maker` 새로고침에 서버 재작성이 필요하지 않습니다. Vite `base: './'`와 출력 사이트의 상대 자산 경로를 유지합니다. 일반 정적 호스팅에는 `index.html`·`styles.css`·`script.js`·`assets/`를 같은 위치에 올립니다.
+
+## 의존성·글꼴
+
+정확한 버전은 `frontend/package.json`과 lock 파일에 고정합니다.
+
+- React·React DOM: 화면 렌더링.
+- React Router DOM: 화면 라우팅과 샘플 매개변수 전달.
+- fflate 0.8.3: 필요한 ZIP 생성·제한된 스트림 압축 해제만 담당하는 경량 라이브러리. MIT 라이선스를 `frontend/public/licenses/fflate-LICENSE.txt`에 동봉합니다. 추가 서버나 저장 SDK는 사용하지 않습니다.
+- GrapesJS 0.23.6: 지정된 오픈소스 블록 편집 엔진. 작은 검증 후 채택했으며 상용 Studio SDK는 사용하지 않습니다. BSD-3-Clause 라이선스 전문을 `frontend/public/licenses/GrapesJS-LICENSE.txt`에 포함합니다. [검증 기록](frontend/docs/GRAPESJS_VALIDATION.md)에 API 근거와 제약을 기록했습니다.
+- Vite·React 플러그인·TypeScript·React 타입: 개발 서버, 빌드, 엄격한 타입 검사.
+- Pretendard 1.3.9: 한글 가독성. npm 패키지 CSS를 불러오고 Vite가 WOFF2를 로컬 빌드 자산으로 복사합니다. 외부 폰트 CDN 요청 없이 `font-display: swap`과 시스템 한글 폰트 대체를 사용합니다. 전체 글꼴 파일은 약 2.06 MB이며 서브셋 최적화는 추후 검토합니다.
+
+Pretendard는 상업적 이용·임베딩·재배포가 가능한 SIL OFL 1.1입니다. 글꼴 자체 판매 제한과 저작권·라이선스 동봉 조건을 지킵니다. [공식 라이선스](https://github.com/orioncactus/pretendard/blob/v1.3.9/LICENSE) 전문을 `frontend/public/licenses/Pretendard-OFL.txt`에 포함하며 빌드 시 함께 복사됩니다.
+
+## 검증·다음 단계
+
+Phase 5 로컬 통합 검증에서 하위 경로 홈→샘플→제작→저장→Pages ZIP 복원, 제작 경로 새로고침, 모든 기본 블록·PC/태블릿/모바일 편집, 출력 이미지·내부 링크·모바일 레이아웃, 오류 ZIP 보존, 회원 미연결 동작을 확인했습니다. 기존 일반 ZIP도 왕복·독립 실행을 재검증했습니다. 두 워크플로 YAML 문법·구조와 출력 파일 복사 명령을 로컬 검증했습니다. [Phase 5 검증 기록](frontend/docs/PHASE5_VALIDATION.md)을 참고하세요. **실제 Actions 실행·공개 배포는 미검증**입니다. 실물 모바일·Safari·Firefox와 JPG/WebP/GIF 각각의 왕복도 남아 있습니다.
+
+Phase 4는 Edge 프로덕션 1440·768·390·320px에서 폼 입력·상호 이동·오류·미연결 제출·입력 초기화와 가로 초과 없음을 확인했습니다. 인증 요청·Storage 쓰기·쿠키가 없었고, 회원 화면 왕복 후 편집 내용과 실제 ZIP 다운로드도 유지했습니다. TypeScript·빌드 통과. [Phase 4 검증 기록](frontend/docs/PHASE4_VALIDATION.md)에 확인 범위를 기록했습니다.
+
+TypeScript 검사·프로덕션 빌드, 실제 Edge의 1440·768·390·320px 제작 화면, 빈 페이지·두 샘플, 내용·스타일·이미지·링크 편집, 삽입·이동·복제·삭제, 내용·스타일 undo/redo, PC 드래그, 실제 터치 이벤트, 페이지 이동 후 내용·실행 기록과 기기별 미리보기를 검증했습니다. 제작 패널의 가로 초과와 브라우저 런타임 오류가 없었습니다. 이전 홈 1440·1024·768·390·320px 검증도 유지합니다. 실물 기기·Safari 검증은 남아 있습니다.
+
+Phase 3에서는 개발·프로덕션 화면에서 빈 페이지·학교·공공기관 샘플의 실제 ZIP 다운로드 → 불러오기 → 재저장 후 블록과 자산 바이트 일치, 복원 후 재편집을 확인했습니다. 압축 해제한 사이트를 하위 경로의 정적 서버와 `file://`로 직접 실행했고, 375px에서 미리보기와 주요 요소의 내용·스타일·크기가 일치했습니다. 15종 손상·누락·버전·참조 오류에서 작업·undo/redo 보존, JavaScript 미실행, 외부 이미지 실패 시 저장 중단을 검증했습니다. 320px 실제 터치 이벤트 저장·불러오기와 이미지 없는 빈 ZIP도 통과했습니다. [Phase 3 검증 기록](frontend/docs/PHASE3_VALIDATION.md)에 확인 범위와 미검증 항목을 기록했습니다.
+
+실제 인증·결제·온라인 저장·서버·DB·API는 후속 기능입니다. 실제 Actions 실행과 공개 배포 검증도 남아 있습니다. 엔진은 제작 화면에만 지연 로딩되며 엔진 포함 청크 약 1.13 MB(압축 약 300 KB)의 Vite 크기 안내가 남습니다.

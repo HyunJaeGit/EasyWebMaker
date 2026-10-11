@@ -1,0 +1,20 @@
+// 서비스의 방향과 제작 과정을 소개하고 빈 시작 또는 샘플 선택을 연결한다.
+import { Link } from 'react-router-dom';
+import { samples } from '../shared/samples';
+import { SitePreview } from '../shared/SitePreview';
+
+const steps = [
+  { title: '시작점을 고르고', description: '빈 페이지 또는 마음에 드는 샘플로\n나만의 사이트를 시작하세요.', icon: '▦' },
+  { title: '내 이야기를 담고', description: '블록을 배치하고 글과 이미지를 바꿔\n원하는 모습으로 다듬으세요.', icon: '✎' },
+  { title: '웹사이트로 꺼내기', description: '완성한 사이트를 파일로 저장해\n원하는 곳에 게시하세요.', icon: '↗' },
+];
+
+export function HomePage() {
+  return <>
+    <section className="hero container" aria-labelledby="hero-title"><div className="hero-copy"><div className="eyebrow"><span className="status-dot" />작은 아이디어의 첫 번째 웹사이트</div><h1 id="hero-title">생각만 했던 사이트,<br /><span>이제 내 손으로.</span></h1><p className="hero-description">학교의 소식도, 우리 기관의 이야기도.<br />복잡한 코드 대신, 당신의 생각으로 채워보세요.</p><Link className="button primary" to="/maker">나만의 사이트 만들기 <span aria-hidden="true">↗</span></Link><p className="hero-note"><span aria-hidden="true">✓</span> 로그인 없이 시작 <span className="note-divider">·</span> 블록으로 만드는 나만의 사이트</p></div><div className="hero-visual"><div className="visual-top"><span><span className="status-dot" /> YOUR NEXT WEBSITE</span><span>01 / 학교 샘플</span></div><div className="browser"><div className="browser-bar"><div className="browser-dots" aria-hidden="true"><i /><i /><i /></div><span>나의 첫 번째 웹사이트</span><span aria-hidden="true">↗</span></div><SitePreview /></div><div className="visual-caption"><span className="caption-stroke" aria-hidden="true">↳</span> 정돈된 샘플 위에, 당신만의 이야기를.</div><div className="floating-label"><span aria-hidden="true">✦</span> 가능성은 빈 페이지에서 시작됩니다</div></div></section>
+    <div className="principles container"><p>만드는 일은 가볍게.<br /><strong>담고 싶은 이야기는 온전히.</strong></p><div><span aria-hidden="true">▤</span><span>블록으로 차근차근<small>필요한 구역을 조립하는 방식</small></span></div><div><span aria-hidden="true">▣</span><span>어떤 화면에서도<small>반응형 사이트를 목표로</small></span></div><div><span aria-hidden="true">↗</span><span>내 손에 남는 사이트<small>ZIP으로 저장·다시 편집</small></span></div></div>
+    <section className="process-section container" aria-labelledby="process-title"><div className="section-heading"><div><span className="section-kicker">HOW IT WORKS</span><h2 id="process-title">세 단계로 만나는 나의 웹사이트</h2></div><p>처음이어도 괜찮아요.<br />하나씩 쌓아가면 되니까요.</p></div><div className="steps">{steps.map((step, index) => <article className="step" key={step.title}><div className="step-top"><span className="step-icon" aria-hidden="true">{step.icon}</span><span className="step-number">0{index + 1}</span></div><h3>{step.title}</h3><p>{step.description}</p></article>)}</div><p className="scope-note">편집한 사이트를 ZIP으로 저장하고, 다시 불러와 이어서 만들 수 있습니다.</p></section>
+    <section className="samples-section" aria-labelledby="samples-title"><div className="container"><div className="section-heading"><div><span className="section-kicker">A GOOD PLACE TO START</span><h2 id="samples-title">빈 화면이 막막하다면,<br />이런 시작은 어때요?</h2></div><p>목적에 맞는 구성, 정돈된 디자인.<br />마음에 드는 샘플을 골라보세요.</p></div><div className="sample-grid">{samples.map((sample, index) => <article className="sample-card" key={sample.id}><div className={`sample-card-preview ${sample.id}`}><div className="sample-card-top"><span>0{index + 1}</span><span>{sample.category}</span></div><div className="sample-browser"><SitePreview kind={sample.id} /></div></div><div className="sample-card-content"><div className="sample-tags"><span>{sample.tone}</span><span>{sample.sections}</span></div><h3>{sample.name}</h3><p>{sample.description}</p><Link className="sample-start" to={`/maker?sample=${sample.id}`}>이 샘플로 시작하기 <span aria-hidden="true">↗</span></Link></div></article>)}</div><p className="sample-disclaimer">모든 샘플은 가상 기관을 위해 제작한 디자인 예시입니다. 실제 기관의 로고나 콘텐츠를 사용하지 않았습니다.</p></div></section>
+    <section className="closing container" aria-labelledby="closing-title"><div><span className="section-kicker">MAKE IT YOURS</span><h2 id="closing-title">당신의 이야기가 시작될 자리.</h2><p>작은 아이디어 하나면 충분해요.</p></div><Link className="button primary" to="/maker">나만의 사이트 만들기 <span aria-hidden="true">↗</span></Link></section>
+  </>;
+}
